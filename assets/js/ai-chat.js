@@ -2,6 +2,18 @@
   const forms = document.querySelectorAll('[data-ai-chat-form]');
   if (!forms.length) return;
 
+  const appendChatRow = (container, sender, message) => {
+    const row = document.createElement('div');
+    row.className = 'chat-row';
+    const title = document.createElement('strong');
+    title.textContent = sender;
+    const body = document.createElement('p');
+    body.textContent = message;
+    row.append(title, body);
+    container.appendChild(row);
+    return row;
+  };
+
   const api = {
     post: async (endpoint, payload) => {
       await new Promise((r) => setTimeout(r, 600));
@@ -19,11 +31,12 @@
       e.preventDefault();
       if (!input || !output || !input.value.trim()) return;
       const msg = input.value.trim();
-      output.insertAdjacentHTML('beforeend', `<div class="chat-row"><strong>Kullanıcı</strong><p>${msg}</p></div>`);
+      appendChatRow(output, 'Kullanıcı', msg);
       input.value = '';
-      output.insertAdjacentHTML('beforeend', '<div class="chat-row"><strong>NEXORA AI</strong><p>Sunucu verileri analiz ediliyor...</p></div>');
+      const pending = appendChatRow(output, 'NEXORA AI', 'Sunucu verileri analiz ediliyor...');
       const result = await api.post('/api/ai/chat', { message: msg });
-      output.lastElementChild.querySelector('p').textContent = result.message;
+      const pendingText = pending.querySelector('p');
+      if (pendingText) pendingText.textContent = result.message;
       output.scrollTop = output.scrollHeight;
     });
   });
