@@ -1,0 +1,18 @@
+@media (max-width: 1080px) {
+  .cards-grid { grid-template-columns: repeat(2,1fr); }
+  .infobar-grid { grid-template-columns: repeat(3,1fr); }
+}
+
+@media (max-width: 860px) {
+  .main-nav, .auth-actions { display: none; }
+  .mobile-toggle { display: inline-flex; }
+  .hero-grid, .configurator, .ai-demo, .footer-grid { grid-template-columns: 1fr; }
+  .features-grid, .steps-grid { grid-template-columns: repeat(2,1fr); }
+  .form-grid, .inline-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  .infobar-grid, .cards-grid, .features-grid, .steps-grid { grid-template-columns: 1fr; }
+  .section { padding: 58px 0; }
+  .hero { padding-top: 72px; }
+}
